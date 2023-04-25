@@ -30,6 +30,7 @@ export const updateBlog = (req:Request, res:Response) => {
 export const postBlog = ({body}:Request, res:Response) => {
     try {
         res.send(body);
+        console.log(body)
     } catch (error) {
         handleHttp(res, 'ERROR_POST_Blog')
     }

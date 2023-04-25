@@ -10,16 +10,17 @@ const app = express();
 //permite que los clientes u otro servicio puedan consultar esta api
 app.use(cors());
 
+//Permite que la api reciba datos
+app.use(express.json());
+
 //Permite a mi api conocer las uri´s que tengo 
 app.use(router);
 
-//Permite que la api reciba datos
-app.use(express.json);
+
+//Se levanta el servidor en el puerto que se eligio
+app.listen(PORT, () => console.log("escuchando en el puerto", PORT)) 
 
 //Conexion a la babse de datos
 db().then(() => {
     console.log("ready")
 })
-
-//Se levanta el servidor en el puerto que se eligio
-app.listen(PORT, () => console.log("escuchando en el puerto", PORT)) 
