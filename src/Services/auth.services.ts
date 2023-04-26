@@ -2,6 +2,7 @@ import UserModel from "../Model/user.model"
 import { User } from "../Interfaces/user.interfaces";
 import { encrypt, verified } from "../Utils/bcrypt.handle";
 import { Auth } from "../Interfaces/auth.interfaces";
+import { generateToken } from "../Utils/jwt.handle";
 
 export const registerNewUser = async ({email, password, name}: User) =>{
     //Busco si existe un registro del email en la base de datos
@@ -16,11 +17,14 @@ export const registerNewUser = async ({email, password, name}: User) =>{
 export const loginUser = async ({email, password}: Auth) =>{
     //Busco si existe un registro del email en la base de datos
     const checkIs = await UserModel.findOne({email});
-    if(!checkIs) return "IVALID_DATA";
+    if(!checkIs) return "INVALID_DATA";
 
     const passwordHash = checkIs.password //TODO el encriptado
     const isCorrect = await verified(password, passwordHash);
+
     if(!isCorrect) return "INVALID_DATA";
 
-    return checkIs;
+    const token = generateToken(checkIs.email);
+
+    return token;
 }
