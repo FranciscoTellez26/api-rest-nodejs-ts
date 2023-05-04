@@ -10,13 +10,11 @@ export const  checkJwt = (req:RequestExt, res:Response, next: NextFunction) => {
         const jwtByUser = req.headers.authorization || "";
         const jwt = jwtByUser.split(' ').pop();
         const isUser = verifyToken(`${jwt}`) as {id:string};
-        console.log(isUser);
 
         if(!isUser){
             res.status(400).send("INVALID_SESSION")
         }else{
             req.user = isUser;
-            console.log(jwtByUser);
             next();
         }
         
