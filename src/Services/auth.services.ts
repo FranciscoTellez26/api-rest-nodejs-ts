@@ -26,5 +26,9 @@ export const loginUser = async ({email, password}: Auth) =>{
 
     const token = generateToken(checkIs.email);
 
-    return token;
+    const data = {
+        token, user: checkIs
+    };
+
+    return data;
 }
